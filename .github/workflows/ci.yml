@@ -47,10 +47,10 @@ jobs:
             mkdir -p ~/.cache/stylua
             curl -L https://github.com/JohnnyMorganz/StyLua/releases/latest/download/stylua-linux-x86_64.zip -o stylua.zip
             unzip stylua.zip
+            chmod +x stylua
             mv stylua ~/.cache/stylua/
           fi
-          sudo cp ~/.cache/stylua/stylua /usr/local/bin/
-          chmod +x /usr/local/bin/stylua
+          sudo cp ~/.cache/stylua/stylua /usr/local/bin/stylua
 
       - name: Cache Neovim data directory
         uses: actions/cache@v4
