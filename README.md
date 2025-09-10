@@ -1,5 +1,7 @@
 # 🚀 Modern Neovim Configuration
 
+[![CI](https://github.com/leandronsp/nvim-config/actions/workflows/ci.yml/badge.svg)](https://github.com/leandronsp/nvim-config/actions/workflows/ci.yml)
+
 A **modular**, **well-tested**, and **thoroughly documented** Neovim configuration built on the solid foundation of kickstart.nvim. This setup prioritizes **maintainability**, **performance**, and **educational value** while providing a powerful development environment.
 
 ## ✨ Features
