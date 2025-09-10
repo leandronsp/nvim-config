@@ -92,13 +92,12 @@ nvim
 ### **Essential Makefile Commands**
 ```bash
 make help           # Show all available commands
-make sync           # Update/install all plugins
-make test           # Run complete test suite
+make sync           # Sync plugins and tools
+make test           # Run test suite  
 make health         # Run health checks
-make doctor         # Comprehensive validation
-make info           # Show configuration info
-make backup         # Create configuration backup
-make clean-cache    # Clear Neovim cache
+make doctor         # Full diagnostic check
+make backup         # Create backup
+make info           # Show config info
 ```
 
 ## ⌨️ **Essential Shortcuts**
@@ -275,6 +274,178 @@ Tests verify:
 :Telescope find_files cwd=~/.config/nvim  " Browse config files
 ```
 
+## 🦀 **Language-Specific Commands**
+
+This configuration provides rich LSP support for multiple languages. Here are the most useful commands for each:
+
+### **🦀 Rust Development**
+
+The configuration includes comprehensive Rust support via rust-analyzer with Clippy integration:
+
+**Essential Commands:**
+```vim
+" LSP Features
+gd                    " Go to definition
+gr                    " Find references  
+gi                    " Go to implementation
+K                     " Show documentation
+;rn                   " Rename symbol
+;ca                   " Code actions (implement traits, add imports, etc.)
+
+" Rust-specific LSP features
+;th                   " Toggle inlay hints (see types inline)
+```
+
+**Cargo Integration:**
+```bash
+# In terminal (with Rust PATH configured)
+cargo check           # Fast compile check
+cargo clippy          # Enhanced linting (configured in LSP)
+cargo test            # Run tests
+cargo run             # Run project
+cargo build --release # Release build
+```
+
+**Key Features:**
+- ✅ **Clippy integration** - Enhanced linting on save
+- ✅ **All Cargo features** enabled
+- ✅ **Procedural macros** support
+- ✅ **Inlay hints** - See types and parameters inline
+- ✅ **Auto-imports** and code actions
+
+### **🐍 Python Development**
+
+Add Python LSP server by editing `lua/plugins/coding/lsp.lua`:
+```lua
+-- In servers table, add:
+pyright = {}, -- or pylsp = {} for alternative
+```
+
+**Essential Commands:**
+```vim
+gd                    " Go to definition
+gr                    " Find references
+;ca                   " Code actions (organize imports, etc.)
+;f                    " Format with black/isort
+K                     " Show documentation
+```
+
+**Python Tools:**
+```bash
+# Install via Mason (:Mason) or manually
+pip install black isort     # Formatters
+pip install flake8 mypy     # Linters
+```
+
+### **🐹 Go Development**
+
+Add Go LSP server by editing `lua/plugins/coding/lsp.lua`:
+```lua
+-- In servers table, add:
+gopls = {},
+```
+
+**Essential Commands:**
+```vim
+gd                    " Go to definition
+;ca                   " Code actions (generate methods, etc.)
+;f                    " Format with gofmt
+gr                    " Find references
+```
+
+**Go Tools:**
+```bash
+# Standard Go commands work seamlessly
+go run .              # Run current package
+go test ./...         # Run all tests  
+go build             # Build project
+go mod tidy          # Clean dependencies
+```
+
+### **⚡ JavaScript/TypeScript**
+
+Add TypeScript LSP server by editing `lua/plugins/coding/lsp.lua`:
+```lua
+-- In servers table, add:
+ts_ls = {},
+```
+
+**Essential Commands:**
+```vim
+gd                    " Go to definition
+;ca                   " Code actions (auto-imports, refactoring)
+;f                    " Format with prettier
+gr                    " Find references across project
+;rn                   " Rename symbol
+```
+
+**Node.js Integration:**
+```bash
+npm run dev          # Development server
+npm test             # Run tests
+npm run build        # Build project
+npm run lint         # ESLint checking
+```
+
+### **⚙️ C/C++ Development**
+
+Add C/C++ LSP server by editing `lua/plugins/coding/lsp.lua`:
+```lua
+-- In servers table, add:
+clangd = {},
+```
+
+**Essential Commands:**
+```vim
+gd                    " Go to definition/declaration
+;ca                   " Code actions
+;f                    " Format with clang-format
+gr                    " Find references
+```
+
+### **🗄️ SQL Development**
+
+Add SQL LSP server:
+```lua
+-- In servers table, add:
+sqlls = {},
+```
+
+### **🐳 Docker & Configuration Files**
+
+**Built-in support for:**
+- **Dockerfile** - Syntax highlighting and LSP
+- **YAML** - Perfect for Docker Compose, CI/CD
+- **TOML** - Cargo.toml, pyproject.toml, etc.
+- **JSON** - Package files, configs
+
+**Essential Commands:**
+```vim
+;f                    " Format YAML/JSON/TOML
+;ca                   " Code actions for configs
+```
+
+### **🌐 Adding New Languages**
+
+To add support for any language:
+
+1. **Add LSP server** in `lua/plugins/coding/lsp.lua`:
+```lua
+your_language_ls = {},
+```
+
+2. **Add formatter** in `lua/plugins/coding/formatting.lua`:
+```lua
+your_language = { "your_formatter" },
+```
+
+3. **Install tools via Mason:**
+```vim
+:Mason
+```
+
+See `:help lspconfig-all` for complete server list.
+
 ## 🎯 **Customization Examples**
 
 ### **Change Leader Key**
@@ -360,51 +531,42 @@ nvim  # Reinstalls everything
 
 ## 🛠 **Makefile Reference**
 
-This configuration includes a comprehensive Makefile with 40+ commands for managing your Neovim setup:
+This configuration includes a streamlined Makefile focused on routine commands:
 
 ### **Essential Commands**
 ```bash
-make help           # Show all available commands with descriptions
-make install        # Install configuration with automatic backup
-make sync           # Synchronize all plugins (install/update)  
+make help           # Show all available commands
+make sync           # Sync all plugins and tools  
 make test           # Run complete test suite
-make health         # Run comprehensive health checks
-make doctor         # Full diagnostic check (health + test + lint)
+make health         # Run health checks
+make doctor         # Full diagnostic check
 ```
 
-### **Plugin & Tool Management**
+### **Plugin Management**
 ```bash
-make update         # Update all plugins to latest versions
-make mason-sync     # Update LSP servers and tools
-make clean-plugins  # Remove unused plugins
-make restore-plugins # Restore from lazy-lock.json
+make install        # Install missing plugins
+make update         # Update plugins to latest
+make clean          # Remove unused plugins
+make restore        # Restore from lazy-lock.json
 ```
 
-### **Development & Debugging**
+### **Development**
 ```bash
-make dev            # Start with verbose logging
-make startup-time   # Measure and profile startup performance
-make lint-lua       # Check Lua code style (requires stylua)
-make format-lua     # Format all Lua files
+make format         # Format Lua files (requires stylua)
+make lint           # Check Lua code style
+make startup-time   # Measure startup performance
+make dev            # Start with debug logging
 ```
 
-### **Maintenance & Utilities**
+### **Maintenance**
 ```bash
 make backup         # Create timestamped backup
-make reset          # Complete reset (removes all data)
-make info           # Show configuration statistics
-make stats          # Detailed code and plugin statistics
-make todo           # Show TODO/FIXME comments
+make clean-cache    # Clear cache and state
+make reset          # Full reset (removes all data)
+make info           # Show config statistics
 ```
 
-### **Automation & CI**
-```bash
-make ci             # Run full CI pipeline (test + lint + validate)
-make pre-commit     # Pre-commit checks (format + test)
-make benchmark      # Performance benchmarking
-```
-
-Run `make help` to see all available commands with descriptions.
+Run `make help` to see all available commands.
 
 ## 📄 **License**
 
