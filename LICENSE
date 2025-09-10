@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2024 Leandro Santos (@leandronsp)
+Copyright (c) 2025 Leandro Proença (@leandronsp)
 Portions Copyright (c) 2023 nvim-lua/kickstart.nvim contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -30,7 +30,7 @@ This configuration is a derivative work based on kickstart.nvim:
 - Original authors: nvim-lua/kickstart.nvim contributors
 - Original license: MIT License
 
-Substantial modifications and additions by Leandro Santos (@leandronsp) include:
+Substantial modifications and additions by Leandro Proença (@leandronsp) include:
 - Complete architectural refactor from monolithic to modular design
 - Comprehensive testing infrastructure with Plenary
 - Professional development workflow with Makefile

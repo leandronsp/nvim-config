@@ -5,3 +5,7 @@ nvim
 
 spell/
 lazy-lock.json
+
+# Documentation (keep only README.md)
+*.md
+!README.md
