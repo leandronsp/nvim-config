@@ -34,11 +34,19 @@ jobs:
 
       - name: Install plugins
         run: |
-          nvim --headless -c "qall" || true
-          nvim --headless -c "lua require('lazy').install({wait = true})" -c "qall"
+          # Set up Neovim config directory
+          mkdir -p ~/.config/nvim
+          cp -r . ~/.config/nvim/
+          # Bootstrap and install plugins
+          cd ~/.config/nvim
+          nvim --headless +'lua require("config.lazy")' +'lua require("lazy").install({wait = true})' +qall
 
       - name: Run health check
-        run: make health
+        run: |
+          cd ~/.config/nvim
+          make health
 
       - name: Run tests
-        run: make test
+        run: |
+          cd ~/.config/nvim
+          make test
