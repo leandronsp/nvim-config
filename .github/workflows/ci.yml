@@ -1,4 +1,5 @@
 name: CI
+# Test caching performance
 
 on:
   push:
@@ -13,6 +14,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Cache APT packages
+        uses: actions/cache@v4
+        with:
+          path: /var/cache/apt/archives
+          key: ${{ runner.os }}-apt-${{ hashFiles('.github/workflows/ci.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-apt-
+
       - name: Install dependencies
         run: |
           sudo apt-get update
@@ -25,19 +34,42 @@ jobs:
           sudo apt-get install -y neovim
           nvim --version
 
+      - name: Cache StyLua
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/stylua
+          key: ${{ runner.os }}-stylua-${{ hashFiles('.github/workflows/ci.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-stylua-
+
       - name: Install stylua
         run: |
-          curl -L https://github.com/JohnnyMorganz/StyLua/releases/latest/download/stylua-linux-x86_64.zip -o stylua.zip
-          unzip stylua.zip
-          chmod +x stylua
-          sudo mv stylua /usr/local/bin/
+          if [ ! -f ~/.cache/stylua/stylua ]; then
+            mkdir -p ~/.cache/stylua
+            curl -L https://github.com/JohnnyMorganz/StyLua/releases/latest/download/stylua-linux-x86_64.zip -o stylua.zip
+            unzip stylua.zip
+            chmod +x stylua
+            mv stylua ~/.cache/stylua/
+          fi
+          sudo cp ~/.cache/stylua/stylua /usr/local/bin/stylua
+
+      - name: Cache Neovim data directory
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.local/share/nvim
+            ~/.local/state/nvim
+          key: ${{ runner.os }}-nvim-${{ hashFiles('**/lazy-lock.json', 'lua/plugins/**/*.lua') }}
+          restore-keys: |
+            ${{ runner.os }}-nvim-
+
+      - name: Setup Neovim config
+        run: |
+          mkdir -p ~/.config/nvim
+          cp -r . ~/.config/nvim/
 
       - name: Install plugins
         run: |
-          # Set up Neovim config directory
-          mkdir -p ~/.config/nvim
-          cp -r . ~/.config/nvim/
-          # Bootstrap and install plugins
           cd ~/.config/nvim
           nvim --headless +'lua require("config.lazy")' +'lua require("lazy").install({wait = true})' +qall
 
