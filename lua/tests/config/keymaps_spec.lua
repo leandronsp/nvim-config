@@ -23,18 +23,16 @@ describe('Basic Keymaps', function()
   end)
 
   it('should have window navigation keymaps', function()
-    local keymap = vim.api.nvim_get_keymap 'n'
+    -- Load configuration to ensure keymaps are set
+    require('config.options')
+    require('config.keymaps')
+    
     local nav_keys = { '<C-h>', '<C-j>', '<C-k>', '<C-l>' }
 
     for _, key in ipairs(nav_keys) do
-      local found = false
-      for _, map in ipairs(keymap) do
-        if map.lhs == key then
-          found = true
-          break
-        end
-      end
-      assert.is_true(found, 'Missing navigation keymap: ' .. key)
+      -- Check if keymap exists using vim.fn.mapcheck
+      local mapping = vim.fn.mapcheck(key, 'n')
+      assert.is_not.equals('', mapping, 'Missing navigation keymap: ' .. key)
     end
   end)
 

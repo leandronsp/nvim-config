@@ -24,7 +24,12 @@ describe('Neovim Options', function()
   end)
 
   it('should enable mouse support', function()
-    assert.equals('a', vim.opt.mouse:get())
+    local mouse_setting = vim.opt.mouse:get()
+    if type(mouse_setting) == 'table' then
+      assert.is_true(mouse_setting.a)
+    else
+      assert.equals('a', mouse_setting)
+    end
   end)
 
   it('should disable showmode', function()
