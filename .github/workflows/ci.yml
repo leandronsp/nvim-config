@@ -9,9 +9,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ~/.config/nvim
     
     steps:
       - uses: actions/checkout@v4
@@ -66,17 +63,19 @@ jobs:
             ${{ runner.os }}-nvim-
 
       - name: Setup Neovim config
-        working-directory: ./
         run: |
           mkdir -p ~/.config/nvim
           cp -r . ~/.config/nvim/
 
       - name: Install plugins
+        working-directory: ~/.config/nvim
         run: |
           nvim --headless +'lua require("config.lazy")' +'lua require("lazy").install({wait = true})' +qall
 
       - name: Run health check
+        working-directory: ~/.config/nvim
         run: make health
 
       - name: Run tests
+        working-directory: ~/.config/nvim
         run: make test
