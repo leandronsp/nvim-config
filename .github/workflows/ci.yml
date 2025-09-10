@@ -68,14 +68,16 @@ jobs:
           cp -r . ~/.config/nvim/
 
       - name: Install plugins
-        working-directory: ~/.config/nvim
         run: |
+          cd ~/.config/nvim
           nvim --headless +'lua require("config.lazy")' +'lua require("lazy").install({wait = true})' +qall
 
       - name: Run health check
-        working-directory: ~/.config/nvim
-        run: make health
+        run: |
+          cd ~/.config/nvim
+          make health
 
       - name: Run tests
-        working-directory: ~/.config/nvim
-        run: make test
+        run: |
+          cd ~/.config/nvim
+          make test
