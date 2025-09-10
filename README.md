@@ -14,7 +14,7 @@ A **modular**, **well-tested**, and **thoroughly documented** Neovim configurati
 ### 🛠 **Built-in Tools**
 - **LSP Integration** - rust-analyzer, lua_ls with automatic installation via Mason
 - **Smart Completion** - nvim-cmp with LSP, snippets, paths, and AI suggestions
-- **Advanced Search** - Telescope with fuzzy finding, live grep, and file navigation
+- **Advanced Search** - Snacks picker with frecency, fuzzy finding, live grep, and git integration
 - **Code Formatting** - Conform.nvim with support for 15+ languages
 - **Git Integration** - Gitsigns with hunk navigation and visual indicators  
 - **AI Assistance** - Supermaven for intelligent code completion
@@ -44,7 +44,7 @@ A **modular**, **well-tested**, and **thoroughly documented** Neovim configurati
 │   │   └── lazy.lua              # Plugin manager setup
 │   ├── 🔌 plugins/               # Plugin configurations
 │   │   ├── ui/                   # User interface (theme, statusline, etc.)
-│   │   ├── editor/               # Text editing (telescope, treesitter, etc.)
+│   │   ├── editor/               # Text editing (snacks picker, treesitter, etc.)
 │   │   ├── coding/               # Development tools (LSP, completion, etc.)
 │   │   └── tools/                # Utilities (AI, markdown, etc.)
 │   ├── 🧪 tests/                 # Unit tests for configuration
@@ -105,14 +105,24 @@ make info           # Show config info
 ### **Navigation & Search** (Leader: `;`)
 | Shortcut | Action | Description |
 |----------|---------|-------------|
-| `;sf` | **Search Files** | Find files by name with fuzzy matching |
+| `;sf` | **Search Files** | Find files by name with fuzzy matching and frecency |
 | `;sg` | **Search Grep** | Search text content across all files |  
 | `;sh` | **Search Help** | Search Neovim help documentation |
 | `;sk` | **Search Keymaps** | Find and explore all key mappings |
-| `;sr` | **Search Resume** | Resume the last telescope search |
+| `;sr` | **Search Resume** | Resume the last search |
+| `;s.` | **Recent Files** | Search recently opened files |
+| `;s/` | **Search Open** | Search text in currently open files only |
+| `;sn` | **Search Config** | Search Neovim configuration files |
 | `Ctrl+p` | **Quick Files** | Fast file search (alternative to `;sf`) |
 | `Ctrl+f` | **Quick Grep** | Fast text search (alternative to `;sg`) |
-| `Ctrl+i` | **Recent Files** | Search recently opened files |
+| `Ctrl+i` | **Recent Files** | Quick access to recent files |
+
+### **Git Integration** (Leader: `;`)
+| Shortcut | Action | Description |
+|----------|---------|-------------|
+| `;gb` | **Git Branches** | Browse and switch git branches |
+| `;gc` | **Git Commits** | Browse git commit history |
+| `;gs` | **Git Status** | Browse git status and stage files |
 
 ### **File Management**
 | Shortcut | Action | Description |
@@ -264,14 +274,14 @@ Tests verify:
 ```vim
 :checkhealth          " System health check
 :checkhealth kickstart " Kickstart-specific checks
-:Telescope diagnostics " Browse all project diagnostics
+;sd                   " Browse all project diagnostics (snacks picker)
 ```
 
 ### **Configuration Management**
 ```vim
 :source ~/.config/nvim/init.lua    " Reload configuration
 :edit ~/.config/nvim/lua/config/   " Edit configuration modules  
-:Telescope find_files cwd=~/.config/nvim  " Browse config files
+;sn                               " Browse config files (snacks picker)
 ```
 
 ## 🦀 **Language-Specific Commands**
@@ -471,14 +481,14 @@ return {
 }
 ```
 
-### **Extend Telescope**
+### **Extend Snacks Picker**
 
-Add to `lua/plugins/editor/telescope.lua`:
+Add to `lua/config/keymaps.lua` in the `setup_snacks_keymaps()` function:
 
 ```lua
--- Add custom telescope picker
-vim.keymap.set('n', '<leader>sc', function()
-  require('telescope.builtin').commands()
+-- Add custom snacks picker
+vim.keymap.set('n', '<leader>sc', function() 
+  snacks.picker.commands() 
 end, { desc = '[S]earch [C]ommands' })
 ```
 

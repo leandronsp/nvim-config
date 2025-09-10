@@ -54,9 +54,9 @@ describe('Basic Keymaps', function()
 end)
 
 describe('Keymap Helper Functions', function()
-  it('should provide telescope keymap setup function', function()
+  it('should provide snacks keymap setup function', function()
     local keymaps = require 'config.keymaps'
-    assert.is_function(keymaps.setup_telescope_keymaps)
+    assert.is_function(keymaps.setup_snacks_keymaps)
   end)
 
   it('should provide LSP keymap setup function', function()
