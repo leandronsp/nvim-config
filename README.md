@@ -153,7 +153,7 @@ make info           # Show config info
 | `Tab` / `Shift+Tab` | **Navigate** | Navigate completion menu |
 | `Enter` / `Ctrl+y` | **Accept** | Accept selected completion |
 | `Ctrl+Space` | **Trigger** | Manually trigger completion |
-| `Ctrl+A` | **Accept AI** | Accept Supermaven AI suggestion |
+| `Ctrl+A` | **Accept AI** | Accept Supermaven AI suggestion (works across all languages) |
 | `Ctrl+D` | **Clear AI** | Clear AI suggestion |
 | `Ctrl+j` | **Accept Word** | Accept next word from AI |
 
@@ -276,7 +276,7 @@ Tests verify:
 
 ## 🦀 **Language-Specific Commands**
 
-This configuration provides rich LSP support for multiple languages. Here are the most useful commands for each:
+This configuration provides rich LSP support for multiple languages with **Supermaven AI completion** that works intelligently across all languages. Here are the most useful commands for each:
 
 ### **🦀 Rust Development**
 
