@@ -1,5 +1,5 @@
 -- ===================================================================
--- DEPRECATED: Telescope Configuration  
+-- DEPRECATED: Telescope Configuration
 -- ===================================================================
 -- This file has been replaced by snacks.lua for better performance
 -- and enhanced features. See telescope.lua.backup for original config.

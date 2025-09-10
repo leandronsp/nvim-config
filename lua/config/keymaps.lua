@@ -81,22 +81,48 @@ local M = {}
 
 -- Setup Snacks keymaps (called from snacks plugin configuration)
 function M.setup_snacks_keymaps()
-  local snacks = require('snacks')
-  
+  local snacks = require 'snacks'
+
   -- File and text search
-  vim.keymap.set('n', '<leader>sh', function() snacks.picker.help() end, { desc = '[S]earch [H]elp' })
-  vim.keymap.set('n', '<leader>sk', function() snacks.picker.keymaps() end, { desc = '[S]earch [K]eymaps' })
-  vim.keymap.set('n', '<leader>sf', function() snacks.picker.files() end, { desc = '[S]earch [F]iles' })
-  vim.keymap.set('n', '<C-p>', function() snacks.picker.files() end, { desc = '[S]earch [F]iles' })
-  vim.keymap.set('n', '<leader>ss', function() snacks.picker.pickers() end, { desc = '[S]earch [S]elect Snacks' })
-  vim.keymap.set('n', '<leader>sw', function() snacks.picker.grep_word() end, { desc = '[S]earch current [W]ord' })
-  vim.keymap.set('n', '<leader>sg', function() snacks.picker.grep() end, { desc = '[S]earch by [G]rep' })
-  vim.keymap.set('n', '<C-f>', function() snacks.picker.grep() end, { desc = '[S]earch by [G]rep' })
-  vim.keymap.set('n', '<leader>sd', function() snacks.picker.diagnostics() end, { desc = '[S]earch [D]iagnostics' })
-  vim.keymap.set('n', '<leader>sr', function() snacks.picker.resume() end, { desc = '[S]earch [R]esume' })
-  vim.keymap.set('n', '<leader>s.', function() snacks.picker.recent() end, { desc = '[S]earch Recent Files ("." for repeat)' })
-  vim.keymap.set('n', '<C-i>', function() snacks.picker.recent() end, { desc = '[S]earch Recent Files ("." for repeat)' })
-  vim.keymap.set('n', '<leader><leader>', function() snacks.picker.buffers() end, { desc = '[ ] Find existing buffers' })
+  vim.keymap.set('n', '<leader>sh', function()
+    snacks.picker.help()
+  end, { desc = '[S]earch [H]elp' })
+  vim.keymap.set('n', '<leader>sk', function()
+    snacks.picker.keymaps()
+  end, { desc = '[S]earch [K]eymaps' })
+  vim.keymap.set('n', '<leader>sf', function()
+    snacks.picker.files()
+  end, { desc = '[S]earch [F]iles' })
+  vim.keymap.set('n', '<C-p>', function()
+    snacks.picker.files()
+  end, { desc = '[S]earch [F]iles' })
+  vim.keymap.set('n', '<leader>ss', function()
+    snacks.picker.pickers()
+  end, { desc = '[S]earch [S]elect Snacks' })
+  vim.keymap.set('n', '<leader>sw', function()
+    snacks.picker.grep_word()
+  end, { desc = '[S]earch current [W]ord' })
+  vim.keymap.set('n', '<leader>sg', function()
+    snacks.picker.grep()
+  end, { desc = '[S]earch by [G]rep' })
+  vim.keymap.set('n', '<C-f>', function()
+    snacks.picker.grep()
+  end, { desc = '[S]earch by [G]rep' })
+  vim.keymap.set('n', '<leader>sd', function()
+    snacks.picker.diagnostics()
+  end, { desc = '[S]earch [D]iagnostics' })
+  vim.keymap.set('n', '<leader>sr', function()
+    snacks.picker.resume()
+  end, { desc = '[S]earch [R]esume' })
+  vim.keymap.set('n', '<leader>s.', function()
+    snacks.picker.recent()
+  end, { desc = '[S]earch Recent Files ("." for repeat)' })
+  vim.keymap.set('n', '<C-i>', function()
+    snacks.picker.recent()
+  end, { desc = '[S]earch Recent Files ("." for repeat)' })
+  vim.keymap.set('n', '<leader><leader>', function()
+    snacks.picker.buffers()
+  end, { desc = '[ ] Find existing buffers' })
 
   -- Advanced search functions
   vim.keymap.set('n', '<leader>/', function()
@@ -104,21 +130,27 @@ function M.setup_snacks_keymaps()
   end, { desc = '[/] Fuzzily search in current buffer' })
 
   vim.keymap.set('n', '<leader>s/', function()
-    snacks.picker.grep({ 
+    snacks.picker.grep {
       open_files_only = true,
       prompt = 'Live Grep in Open Files',
-    })
+    }
   end, { desc = '[S]earch [/] in Open Files' })
 
   -- Search Neovim configuration files
   vim.keymap.set('n', '<leader>sn', function()
-    snacks.picker.files({ cwd = vim.fn.stdpath 'config' })
+    snacks.picker.files { cwd = vim.fn.stdpath 'config' }
   end, { desc = '[S]earch [N]eovim files' })
-  
+
   -- Git-related pickers (snacks enhancement)
-  vim.keymap.set('n', '<leader>gb', function() snacks.picker.git_branches() end, { desc = '[G]it [B]ranches' })
-  vim.keymap.set('n', '<leader>gc', function() snacks.picker.git_log() end, { desc = '[G]it [C]ommits' })
-  vim.keymap.set('n', '<leader>gs', function() snacks.picker.git_status() end, { desc = '[G]it [S]tatus' })
+  vim.keymap.set('n', '<leader>gb', function()
+    snacks.picker.git_branches()
+  end, { desc = '[G]it [B]ranches' })
+  vim.keymap.set('n', '<leader>gc', function()
+    snacks.picker.git_log()
+  end, { desc = '[G]it [C]ommits' })
+  vim.keymap.set('n', '<leader>gs', function()
+    snacks.picker.git_status()
+  end, { desc = '[G]it [S]tatus' })
 end
 
 -- Setup LSP keymaps (called when LSP attaches)
@@ -130,14 +162,26 @@ function M.setup_lsp_keymaps(event)
   end
 
   -- Navigation
-  map('gd', function() require('snacks').picker.lsp_definitions() end, '[G]oto [D]efinition')
-  map('gr', function() require('snacks').picker.lsp_references() end, '[G]oto [R]eferences')
-  map('gI', function() require('snacks').picker.lsp_implementations() end, '[G]oto [I]mplementation')
-  map('<leader>D', function() require('snacks').picker.lsp_type_definitions() end, 'Type [D]efinition')
+  map('gd', function()
+    require('snacks').picker.lsp_definitions()
+  end, '[G]oto [D]efinition')
+  map('gr', function()
+    require('snacks').picker.lsp_references()
+  end, '[G]oto [R]eferences')
+  map('gI', function()
+    require('snacks').picker.lsp_implementations()
+  end, '[G]oto [I]mplementation')
+  map('<leader>D', function()
+    require('snacks').picker.lsp_type_definitions()
+  end, 'Type [D]efinition')
 
   -- Symbols and workspace
-  map('<leader>ds', function() require('snacks').picker.lsp_symbols() end, '[D]ocument [S]ymbols')
-  map('<leader>ws', function() require('snacks').picker.lsp_workspace_symbols() end, '[W]orkspace [S]ymbols')
+  map('<leader>ds', function()
+    require('snacks').picker.lsp_symbols()
+  end, '[D]ocument [S]ymbols')
+  map('<leader>ws', function()
+    require('snacks').picker.lsp_workspace_symbols()
+  end, '[W]orkspace [S]ymbols')
 
   -- Code actions
   map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')

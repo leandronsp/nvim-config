@@ -17,7 +17,7 @@ A **modular**, **well-tested**, and **thoroughly documented** Neovim configurati
 - **Advanced Search** - Snacks picker with frecency, fuzzy finding, live grep, and git integration
 - **Code Formatting** - Conform.nvim with support for 15+ languages
 - **Git Integration** - Gitsigns with hunk navigation and visual indicators  
-- **AI Assistance** - Supermaven for intelligent code completion
+- **AI Assistance** - GitHub Copilot for intelligent code completion
 - **Modern UI** - Everforest theme with beautiful statusline and which-key hints
 
 ### 🚀 **Developer Experience**
@@ -163,8 +163,8 @@ make info           # Show config info
 | `Tab` / `Shift+Tab` | **Navigate** | Navigate completion menu |
 | `Enter` / `Ctrl+y` | **Accept** | Accept selected completion |
 | `Ctrl+Space` | **Trigger** | Manually trigger completion |
-| `Ctrl+A` | **Accept AI** | Accept Supermaven AI suggestion (works across all languages) |
-| `Ctrl+D` | **Clear AI** | Clear AI suggestion |
+| `Ctrl+A` | **Accept AI** | Accept GitHub Copilot suggestion (works across all languages) |
+| `Ctrl+D` | **Dismiss AI** | Dismiss AI suggestion |
 | `Ctrl+j` | **Accept Word** | Accept next word from AI |
 
 ### **Window Navigation**
@@ -286,7 +286,7 @@ Tests verify:
 
 ## 🦀 **Language-Specific Commands**
 
-This configuration provides rich LSP support for multiple languages with **Supermaven AI completion** that works intelligently across all languages. Here are the most useful commands for each:
+This configuration provides rich LSP support for multiple languages with **GitHub Copilot AI completion** that works intelligently across all languages. Here are the most useful commands for each:
 
 ### **🦀 Rust Development**
 
